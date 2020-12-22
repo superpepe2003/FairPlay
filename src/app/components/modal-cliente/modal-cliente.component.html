@@ -1,0 +1,89 @@
+
+<div class="modal-header">
+    <h4 class="modal-title">Clientes</h4>
+    <button type="button" 
+            class="close" 
+            data-dismiss="modal" 
+            aria-label="Close"
+            (click)="activeModal.dismiss( nuevo )">
+    <span aria-hidden="true">×</span>
+    </button>
+</div>
+<div class="modal-body">
+
+    <form id="clientForm"
+        autocomplete="off"
+        [formGroup] = "clienteForm"
+        (ngSubmit) = "crearCliente()">
+
+        <h3 class="box-title m-t-40 m-b-0" *ngIf="!isModificar">Registrar nuevo Cliente</h3>
+        <h3 class="box-title m-t-40 m-b-0" *ngIf="isModificar">Modificar Cliente</h3>
+        
+        <div class="form-group input-group mb-3">
+            <div class="input-group-prepend">
+            <span class="input-group-text">
+                <i class="fas fa-user"></i>
+            </span>
+            </div>
+            <input class="form-control" 
+                type="text" 
+                placeholder="Nombre Completo"
+                formControlName="nombreCompleto">
+        </div>
+
+        <div class="form-group input-group mb-3">
+            <div class="input-group-prepend">
+            <span class="input-group-text">
+                <i class="fas fa-phone-square"></i>
+            </span>
+            </div>
+            <input class="form-control" 
+                type="text" 
+                placeholder="Teléfono celular"
+                formControlName="telefono">
+        </div>
+
+        <div class="form-group input-group mb-3">
+            <div class="input-group-prepend">
+            <span class="input-group-text">
+                <i class="fab fa-instagram"></i>
+            </span>
+            </div>
+            <input class="form-control" 
+                type="text" 
+                placeholder="Usuario de Instagram"
+                formControlName="instagram">
+        </div>
+
+        <div class="form-group input-group mb-3">
+            <label>Fecha de Cumpleaños:</label>
+            <div class="input-group" dir="ltr">
+                <button class="input-group-addon" (click)="dmodal.toggle()" type="button">
+                    <i class="fas fa-calendar-day"></i>
+                </button>
+                <input class="form-control" 
+                            placeholder="dd/mm/yyyy" 
+                            name="dp"  
+                            ngbDatepicker 
+                            [(ngModel)] = "fecha"
+                            [ngModelOptions]="{standalone: true}"
+                            [firstDayOfWeek] = "6"
+                            [readonly]="true"
+                            #dmodal="ngbDatepicker">
+                <!-- <ngb-datepicker #dp  
+                                (navigate)="date = $event.next"
+                                formControlName="fechaNac">
+                </ngb-datepicker> -->
+            </div>
+
+        </div>
+
+        
+    </form>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-default" data-dismiss="modal"
+            (click) = "activeModal.dismiss( nuevo )">Cancelar</button>
+    <button *ngIf="isModificar" type="button" class="btn btn-primary" (click)="modificarCliente()">Modificar</button>
+    <button *ngIf="!isModificar" type="button" class="btn btn-primary" (click)="crearCliente()">Guardar</button>
+</div>

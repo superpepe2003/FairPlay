@@ -1,0 +1,102 @@
+
+<div class="modal-header">
+    <h4 class="modal-title">Productos</h4>
+    <button type="button" 
+            class="close" 
+            data-dismiss="modal" 
+            aria-label="Close"
+            (click)="activeModal.dismiss( nuevo )">
+    <span aria-hidden="true">×</span>
+    </button>
+</div>
+<div class="modal-body">
+
+    <form id="produForm"
+        autocomplete="off"
+        [formGroup] = "productoForm"
+        (ngSubmit) = "crearProducto()">
+
+        <h3 class="box-title m-t-40 m-b-0" *ngIf="!isModificar">Registrar nuevo Producto</h3>
+        <h3 class="box-title m-t-40 m-b-0" *ngIf="isModificar">Modificar Producto</h3>
+        
+        <div class="form-group input-group mb-3">
+            <div class="input-group-prepend">
+            <span class="input-group-text">
+                <i class="fas fa-barcode"></i>
+            </span>
+            </div>
+            <input class="form-control" 
+                type="text" 
+                placeholder="Codigo de Barra"
+                formControlName="codBarra">
+        </div>
+
+        <div class="form-group input-group mb-3">
+            <div class="input-group-prepend">
+            <span class="input-group-text">
+                <i class="fab fa-bitcoin"></i>
+            </span>
+            </div>
+            <input class="form-control" 
+                type="text" 
+                placeholder="Nombre"
+                formControlName="nombre">
+        </div>
+
+        <div class="form-group input-group mb-3">
+            <div class="input-group-prepend">
+            <span class="input-group-text">
+                <i class="fas fa-receipt"></i>
+            </span>
+            </div>
+            <input class="form-control" 
+                type="text" 
+                placeholder="Descripción"
+                formControlName="descripcion">
+        </div>
+        
+        <div class="form-group input-group">
+            <div class="input-group-prepend">
+            <span class="input-group-text">$</span>
+            </div>
+                <input class="form-control" 
+                    type="number" 
+                    placeholder="Precio de Venta"
+                    formControlName="pVenta">
+            <div class="input-group-append">
+            <span class="input-group-text">.00</span>
+            </div>
+        </div>
+
+        <div class="form-group input-group">
+            <div class="input-group-prepend">
+            <span class="input-group-text">$</span>
+            </div>
+                <input class="form-control" 
+                    type="number" 
+                    placeholder="Precio de Compra"
+                    formControlName="pCompra">
+            <div class="input-group-append">
+            <span class="input-group-text">.00</span>
+            </div>
+        </div>
+
+        <div class="form-group input-group mb-3">
+            <div class="input-group-prepend">
+            <span class="input-group-text">
+                <i class="fas fa-tags"></i>
+            </span>
+            </div>
+            <input class="form-control" 
+                type="number" 
+                placeholder="Stock"
+                formControlName="stock">
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-default" data-dismiss="modal"
+            (click) = "activeModal.dismiss( nuevo )">Cancelar</button>
+    <button *ngIf="isModificar" type="button" class="btn btn-primary" (click)="modal.close()">Modificar</button>
+    <button *ngIf="!isModificar" type="button" class="btn btn-primary" (click)="crearProducto()">Guardar</button>
+</div>
