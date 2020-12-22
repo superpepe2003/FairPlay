@@ -5,6 +5,7 @@ import { ModalClienteComponent } from './modal-cliente/modal-cliente.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ModalProductoComponent } from './modal-producto/modal-producto.component';
 import { ModalTurnoComponent } from './modal-turno/modal-turno.component';
+import { NgSelect2Module } from 'ng-select2';
 
 
 
@@ -15,6 +16,7 @@ import { ModalTurnoComponent } from './modal-turno/modal-turno.component';
     FormsModule,
     ReactiveFormsModule,
     NgbModule,
+    NgSelect2Module
   ],
   exports: [  ],
   entryComponents: [ ModalClienteComponent, ModalProductoComponent, ModalTurnoComponent ]
