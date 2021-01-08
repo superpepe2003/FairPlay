@@ -8,6 +8,8 @@ import { Turno } from '../../model/turnos.model';
 
 import Swal from 'sweetalert2';
 import { ModalTurnoComponent } from '../../components/modal-turno/modal-turno.component';
+import * as moment from 'moment';
+import { ModalListadoTurnosComponent } from '../../components/modal-listado-turnos/modal-listado-turnos.component';
 
 
 @Component({
@@ -22,9 +24,11 @@ import { ModalTurnoComponent } from '../../components/modal-turno/modal-turno.co
 export class TurnoComponent implements OnInit, OnDestroy {
 
   turnos: Turno[] = [];
+  turnosTotal: Turno[] = [];
   turnosTemp: Turno[] = [];
   turnosSub$: Subscription[] = [];
   totalTurnos = 0;
+  totalSemana = 0;
   desde = 0;
   cargando = true;
   
@@ -44,7 +48,7 @@ export class TurnoComponent implements OnInit, OnDestroy {
     this.calendarConfig.startDate = this.calendar.getToday();
     this.fecha = this.calendar.getToday();
     this.cargaTurnos();
-    
+    this.cargaSemana();
   }
 
   ngOnDestroy() {
@@ -54,12 +58,28 @@ export class TurnoComponent implements OnInit, OnDestroy {
 
   cargaTurnos() {
     this.cargando = true;
-    this.turnosSub$.push( this.turnoService.cargarTurnos( `${this.fecha.year}-${this.fecha.month}-${this.fecha.day}` )
+    this.turnosSub$.push( this.turnoService.cargarTurnos( `${this.fecha.year}-${this.fecha.month}-${this.fecha.day}`, '', 'cobrado' )
         .subscribe( ({ turnos, total }) => {
           this.turnos = turnos;
           this.totalTurnos = total;
           this.turnosTemp = turnos;
           this.cargando = false;
+        })
+    );
+  }
+
+  cargaSemana() {
+    this.cargando = true;
+    const fecha1 = `${ moment().format('YYYY') }-${ moment().format('MM') }-${ moment().format('DD') }`;
+    const fecha2 = moment(fecha1).add(7, 'days').format('YYYY-MM-DD').toString();
+    this.turnosSub$.push( this.turnoService.cargarTurnos( fecha1, fecha2 )
+        .subscribe( ({ turnos, total }) => {
+          
+          this.turnosTotal = turnos;
+          this.totalSemana = total;
+
+          console.log(this.turnosTotal);
+
         })
     );
   }
@@ -86,6 +106,13 @@ export class TurnoComponent implements OnInit, OnDestroy {
         this.cargaTurnos();
       }
     });
+
+  }
+
+
+  abrirModalListado( turno: Turno = null ) {
+    
+    const modalRef = this.modalService.open(ModalListadoTurnosComponent, { windowClass : "my-class"});
 
   }
 

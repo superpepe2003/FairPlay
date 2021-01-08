@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map } from 'rxjs/operators';
+import { debounceTime, map } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { Producto } from '../model/productos.model';
 import { Cliente } from '../model/clientes.model';
@@ -21,7 +21,7 @@ export class BusquedasService {
     const url = `${ this.base_url }/search/${tipo}/${termino}`;
 
     return this.http.get<any[]>( url )
-            .pipe(
+            .pipe(              
               map( (resp: any) => {
 
                 switch( tipo ){

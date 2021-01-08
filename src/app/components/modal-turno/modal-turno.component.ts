@@ -35,7 +35,7 @@ export class ModalTurnoComponent implements OnInit {
     hora: ['', [ Validators.required ]],
     precio: [''],
     cliente: [''],
-    estado: ['reserva'],
+    estado: [''],
     tipo: ['Normal'],
     descripcion: ['']
   }, { asyncValidators: this.turnoService.comprobarTurno() });
@@ -127,6 +127,8 @@ export class ModalTurnoComponent implements OnInit {
     let turno: Turno;
     turno = this.turnoForm.value;
 
+    console.log(turno);
+
     this.turnoService.crearTurno( turno )
         .subscribe( resp => {
           this.resetearCampos();
@@ -175,8 +177,7 @@ export class ModalTurnoComponent implements OnInit {
     this.turnoForm.reset({
       cancha: '1',
       precio: '',
-      cliente: '',
-      estado: 'reserva',
+      estado: 'reservado',
       descripcion: '',
       tipo: 'normal',
     });

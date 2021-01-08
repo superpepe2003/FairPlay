@@ -1,20 +1,39 @@
 
 <div class="row animated fadeIn fast">
-    <div class="col-12">
-        <div class="card">
+    <div class="input-group col-12">
+        <div class="card col-6">
             <div class="card-body">
-
+                Fecha Inicial
                 <div class="input-group" dir="ltr">
                     <input class="form-control" 
                       placeholder="yyyy/m/d" 
                       name="dp"  
                       ngbDatepicker 
-                      [(ngModel)]="fecha"
+                      [(ngModel)]="fechaInicial"
                       [firstDayOfWeek] = "6"
                       [readonly]="true"
-                      (ngModelChange)="onSelectFecha()"
-                      #d="ngbDatepicker">
-                      <button class="input-group-addon" (click)="d.toggle()" type="button">
+                      (ngModelChange)="onSelectFechaInicial()"
+                      #di="ngbDatepicker">
+                      <button class="input-group-addon" (click)="di.toggle()" type="button">
+                        <i class="fa fa-calendar"></i>
+                      </button>
+                </div>
+            </div>
+        </div>
+        <div class="card col-6">
+            <div class="card-body">
+                Fecha Final
+                <div class="input-group" dir="ltr">
+                    <input class="form-control" 
+                      placeholder="yyyy/m/d" 
+                      name="dp"  
+                      ngbDatepicker 
+                      [(ngModel)]="fechaFinal"
+                      [firstDayOfWeek] = "6"
+                      [readonly]="true"
+                      (ngModelChange)="onSelectFechaFinal()"
+                      #df="ngbDatepicker">
+                      <button class="input-group-addon" (click)="df.toggle()" type="button">
                         <i class="fa fa-calendar"></i>
                       </button>
                 </div>
@@ -34,47 +53,27 @@
     </div>
 </div>
 
-<a class="btn btn-app bg-success"
-   *ngIf="!this.cargando" 
-   (click)="abrirModal()">
-    <i class="fas fa-barcode"></i> Agregar
-</a>
-
-<a class="btn btn-app bg-success"
-   *ngIf="!this.cargando" 
-   (click)="abrirModalListado()">
-    <i class="fas fa-list"></i> Listar
-</a>
-
 <div class="col-12" *ngIf="!this.cargando">
     <div class="card">
         <div class="card-body">
-            <h4 class="card-title">Total de Turnos {{ totalTurnos }}</h4><br>
-            <h6>Turnos registrados en la fecha </h6>
+            <h4 class="card-title">Ventas</h4><br>
             <div class="table-responsive">
                 <table class="table table-bordered">
                     <thead>
                         <tr>
-                            <th>Cancha</th>
+                            <th>Fecha</th>
                             <th>Hora</th>
-                            <th>Cliente</th>
-                            <th>Estado</th>
+                            <th>Monto</th>
                             <th class="text-nowrap">Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let item of turnos | sortTurnos">
-                            <td>{{ item.cancha }}</td>
-                            <td>{{ item.hora }}</td>
+                        <tr *ngFor="let item of ventas | sortFecha">
+                            <td>{{ item.fecha | date: 'dd/MM/yyyy' }}</td>
+                            <td>{{ item.fecha | date: 'H:mm' }}</td>
                             <td>
-                                {{ item.cliente['nombreCompleto'] }}
+                                {{ item.monto | currency}}
                             </td>
-                            <ng-container [ngSwitch]="item.estado">
-                              <td *ngSwitchCase="'reservado'">Reservado</td>
-                              <td *ngSwitchCase="'cancelado'">Cancelado</td>
-                              <td *ngSwitchCase="'cobrado'">Cobrado</td>
-                              <td *ngSwitchDefault></td>
-                            </ng-container>
                             <td class="text-nowrap">
                                 <a class="btn btn-sm" (click)="abrirModal( item )" data-toggle="tooltip" data-original-title="Edit"> <i class="fas fa-pen text-inverse mr-3"></i> </a>
                                 <a class="btn btn-sm" (click)="deleteTurno( item )" data-toggle="tooltip" data-original-title="Close"> <i class="fas fa-times text-danger"></i> </a>
@@ -87,4 +86,3 @@
         </div>
     </div>
 </div>
-

@@ -1,0 +1,18 @@
+.disponible {
+    background-color: green;
+    color: white;
+    font-size: 1rem;
+    overflow-x: hidden;
+}
+
+.ocupado{
+    background-color: lightsalmon;
+    font-size: 1rem;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.modal-dialog {
+    width: 90% !important;
+}

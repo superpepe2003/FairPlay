@@ -19,6 +19,16 @@
         <h3 class="box-title m-t-40 m-b-0" *ngIf="!isModificar">Registrar nuevo Turno</h3>
         <h3 class="box-title m-t-40 m-b-0" *ngIf="isModificar">Modificar Turno</h3>
 
+        <small *ngIf="formNoValido()" class="text-danger">
+            <div class="alert alert-danger" role="alert">            
+                Ya existe turno en ese horario y día        
+            </div>
+        </small>
+        <small *ngIf="!formNoValido()" class="text-danger">
+            <div class="alert alert-primary" role="alert">            
+                Turno disponible
+            </div>
+        </small>
         
         <div class="form-group">
             <label>Cliente</label>
@@ -40,32 +50,36 @@
             </ng-select2>                  
         </div>
 
-        <div class="form-group input-group mb-3" >
-            <label>Fecha</label>
-            <div class="input-group" dir="ltr">
-                <input class="form-control" 
-                    placeholder="dd/mm/yyyy" 
-                    name="dp"  
-                    ngbDatepicker 
-                    [(ngModel)] = "fecha"
-                    [ngModelOptions]="{standalone: true}"
-                    [firstDayOfWeek] = "6"
-                    [readonly]="true"
-                    #dmodal="ngbDatepicker">
-                <button class="input-group-addon" (click)="dmodal.toggle()" type="button">
-                <i class="fas fa-calendar-day"></i>
-                </button>
+        <div class="form-group input-group col-12">
+
+            <div class="form-group col-8 input-group mb-3" >
+                <label>Fecha</label>
+                <div class="input-group" dir="ltr">
+                    <input class="form-control" 
+                        placeholder="dd/mm/yyyy" 
+                        name="dp"  
+                        ngbDatepicker 
+                        [(ngModel)] = "fecha"
+                        [ngModelOptions]="{standalone: true}"
+                        [firstDayOfWeek] = "6"
+                        [readonly]="true"
+                        #dmodal="ngbDatepicker">
+                    <button style="max-width: 70px !important;" class="form-control input-group-addon" (click)="dmodal.toggle()" type="button">
+                        <i class="fas fa-calendar-day"></i>
+                    </button>
+                </div>
+            </div>
+    
+            <div class="form-group col-4 input-group mb-3">
+                <label>Hora</label>
+                <ngb-timepicker class="ocultarminuto"
+                                [(ngModel)]="hora"
+                                [ngModelOptions]="{standalone: true}"
+                                minute-step = "0">
+                </ngb-timepicker>
             </div>
         </div>
 
-        <div class="form-group input-group mb-3">
-            <label>Hora</label>
-            <ngb-timepicker class="ocultarminuto"
-                            [(ngModel)]="hora"
-                            [ngModelOptions]="{standalone: true}"
-                            minute-step = "0">
-            </ngb-timepicker>
-        </div>
 
         <div class="form-group">
             <select name="tipo"
@@ -82,10 +96,8 @@
                     class="form-control"
                     formControlName="estado"
                     value="reservado">
-            <option value="reserva">Reserva</option>
+            <option value="reservado">Reservado</option>
             <option value="cancelado">Cancelado</option>
-            <option value="abandonado">Abandonado</option>
-            <option value="confirmado">Confirmado</option>
             </select>
         </div>
         
@@ -102,14 +114,11 @@
             </div>
         </div>
     </form>
-    <small *ngIf="formNoValido()" class="text-danger">
-    Ya existe turno en ese horario y día
-    </small>
 </div>          
 <div class="modal-footer">
     <button type="button" class="btn btn-default" data-dismiss="modal"
             (click) = "activeModal.dismiss( nuevo )">Cancelar</button>
-    <button *ngIf="isModificar" type="button" class="btn btn-primary" (click)="activeModal.close()">Modificar</button>
+    <button *ngIf="isModificar" type="button" class="btn btn-primary" (click)="modificarTurno()">Modificar</button>
     <button *ngIf="!isModificar" type="button" class="btn btn-primary" (click)="crearTurno()">Guardar</button>
 </div>
 

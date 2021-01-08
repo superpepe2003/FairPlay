@@ -18,10 +18,14 @@ export class TurnosService {
 
   constructor( private http: HttpClient ) { }
 
-  cargarTurnos( fecha: string ) {
+  cargarTurnos( fecha: string, fecha2: string = '', estado: string = '' ) {
 
-    const url = `${ this.base_url }/turnos?fecha=${ fecha }`;
-    console.log(url);
+    if( fecha2.length === 0) {
+      fecha2 = moment(fecha).add(1,'days').format('YYYY-MM-DD').toString();
+    }
+
+    const url = `${ this.base_url }/turnos?fecha=${ fecha }&fecha2=${ fecha2 }&estado=${ estado }`;
+
     return this.http.get<CargarTurnos>( url )
                .pipe(
                  map( resp => {
@@ -38,6 +42,8 @@ export class TurnosService {
 
   }
 
+  // Comprueba que el turno no exista en la base de datos
+
   comprobarTurno( ): AsyncValidatorFn{
 
     return ( control: AbstractControl): Promise<ValidationErrors>
@@ -51,12 +57,13 @@ export class TurnosService {
         return new Promise( resolver => null );
       }
 
-      const url = `${ this.base_url }/turnos/buscar?cancha=${ cancha }&hora=${ hora}&fecha=${fecha}`;
+      const url = `${ this.base_url }/turnos/buscar?cancha=${ cancha }&hora=${ hora}&fecha=${fecha}&estado=cobrado`;
 
       return this.http.get( url )
             .pipe(
               map( ( resp: any ) => {
                 if ( this.id_turno ) {
+                  // Verifico que si existe no sea el mismo que modifico
                   if ( resp.total > 0 && resp.turnos[0]._id !== this.id_turno ){
                     return { existe: true };
                   } else {

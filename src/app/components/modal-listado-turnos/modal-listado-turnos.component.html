@@ -1,0 +1,103 @@
+
+<div class="modal-header">
+    <h4 class="modal-title">Turnos</h4>
+    <button type="button" 
+            class="close" 
+            data-dismiss="modal" 
+            aria-label="Close"
+            (click)="activeModal.dismiss()">
+    <span aria-hidden="true">×</span>
+    </button>
+</div>
+<div class="modal-body">
+
+    <div class="row animated fadeIn fast">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+
+                    <div class="input-group" dir="ltr">
+                        <input class="form-control" 
+                        placeholder="yyyy/m/d" 
+                        name="dp"  
+                        ngbDatepicker 
+                        [(ngModel)]="fecha"
+                        [firstDayOfWeek] = "6"
+                        [readonly]="true"
+                        (ngModelChange)="onSelectFecha()"
+                        #d="ngbDatepicker">
+                        <button class="input-group-addon" (click)="d.toggle()" type="button">
+                            <i class="fa fa-calendar"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row animated fadeIn fast" *ngIf="this.cargando">
+        <div class="col-12">
+            <div class="alert alert-success text-center">
+                <h4 class="alert-heading">Cargando</h4>
+                <i class="fas fa-spinner fa-spin fa-2x"></i>
+                <p class="mb-0">Por favor espere</p>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="col-12" *ngIf="!this.cargando">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Total de Turnos {{ totalTurnos }}</h4><br>
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th class="w150" *ngFor="let item of dias">{{ item }}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of horarios">
+                                <td>
+                                    {{ item }}
+                                </td>
+                                <td>
+                                    <h5 [ngClass] = "buscarTurno(0, item, 1) === 'Disponible'? 'disponible': 'ocupado'"> {{ buscarTurno(0, item,1) }} </h5>
+                                    <h5 [ngClass] = "buscarTurno(0, item, 2) === 'Disponible'? 'disponible': 'ocupado'"> {{ buscarTurno(0, item,2) }} </h5>
+                                </td>
+                                <td>
+                                    <h5 [ngClass] = "buscarTurno(1, item, 1) === 'Disponible'? 'disponible': 'ocupado'"> {{ buscarTurno(1, item,1) }} </h5>
+                                    <h5 [ngClass] = "buscarTurno(1, item, 2) === 'Disponible'? 'disponible': 'ocupado'"> {{ buscarTurno(1, item,2) }} </h5>
+                                </td>
+                                <td>
+                                    <h5 [ngClass] = "buscarTurno(2, item, 1) === 'Disponible'? 'disponible': 'ocupado'"> {{ buscarTurno(2, item,1) }} </h5>
+                                    <h5 [ngClass] = "buscarTurno(2, item, 2) === 'Disponible'? 'disponible': 'ocupado'"> {{ buscarTurno(2, item,2) }} </h5>
+                                </td>
+                                <td>
+                                    <h5 [ngClass] = "buscarTurno(3, item, 1) === 'Disponible'? 'disponible': 'ocupado'"> {{ buscarTurno(3, item,1) }} </h5>
+                                    <h5 [ngClass] = "buscarTurno(3, item, 2) === 'Disponible'? 'disponible': 'ocupado'"> {{ buscarTurno(3, item,2) }} </h5>
+                                </td>
+                                <td>
+                                    <h5 [ngClass] = "buscarTurno(4, item, 1) === 'Disponible'? 'disponible': 'ocupado'"> {{ buscarTurno(4, item,1) }} </h5>
+                                    <h5 [ngClass] = "buscarTurno(4, item, 2) === 'Disponible'? 'disponible': 'ocupado'"> {{ buscarTurno(4, item,2) }} </h5>
+                                </td>
+                                <td>
+                                    <h5 [ngClass] = "buscarTurno(5, item, 1) === 'Disponible'? 'disponible': 'ocupado'"> {{ buscarTurno(5, item,1) }} </h5>
+                                    <h5 [ngClass] = "buscarTurno(5, item, 2) === 'Disponible'? 'disponible': 'ocupado'"> {{ buscarTurno(5, item,2) }} </h5>
+                                </td>
+                                <td>
+                                    <h5 [ngClass] = "buscarTurno(6, item, 1) === 'Disponible'? 'disponible': 'ocupado'"> {{ buscarTurno(6, item, 1) }} </h5>
+                                    <h5 [ngClass] = "buscarTurno(6, item, 2) === 'Disponible'? 'disponible': 'ocupado'"> {{ buscarTurno(6, item, 2) }} </h5>
+                                </td>                            
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+

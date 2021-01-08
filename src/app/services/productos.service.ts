@@ -2,8 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { CargarProductos } from '../interfaces/cargar-productos.interface';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { Producto } from '../model/productos.model';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -47,6 +48,16 @@ export class ProductosService {
 
     const url = `${ this.base_url }/productos/${ id }`;
     return this.http.delete( url );
+  }
+
+  buscarPorCodigo( codigo ) : Observable<Producto> {
+
+    const url = `${ this.base_url }/productos/${ codigo }`;
+    return this.http.get<Producto>( url )
+          .pipe(
+            map( (resp: any) => resp.producto )
+          );
+
   }
 
 }

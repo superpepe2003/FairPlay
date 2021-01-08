@@ -12,6 +12,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { TurnoComponent } from './turno/turno.component';
 
 import { NgSelect2Module } from 'ng-select2';
+import { PipesModule } from '../pipes/pipes.module';
+import { VentaComponent } from './venta/venta.component';
+import { CajaComponent } from './caja/caja.component';
 
 
 @NgModule({
@@ -20,7 +23,9 @@ import { NgSelect2Module } from 'ng-select2';
     PagesComponent,
     ProductoComponent,
     ClienteComponent,
-    TurnoComponent
+    TurnoComponent,
+    VentaComponent,
+    CajaComponent
   ],
   imports: [
     CommonModule,
@@ -30,7 +35,8 @@ import { NgSelect2Module } from 'ng-select2';
     ReactiveFormsModule,
     RouterModule,
     NgbModule,
-    NgSelect2Module
+    NgSelect2Module,
+    PipesModule
   ],
   exports: [
     DashboardComponent,
