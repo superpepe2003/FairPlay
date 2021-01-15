@@ -95,8 +95,19 @@
     </form>
 </div>
 <div class="modal-footer">
-    <button type="button" class="btn btn-default" data-dismiss="modal"
+    <button type="button" 
+            class="btn btn-default" 
+            data-dismiss="modal"
+            style="background-color: var( --rojoColor) !important; color: white"
             (click) = "activeModal.dismiss( nuevo )">Cancelar</button>
-    <button *ngIf="isModificar" type="button" class="btn btn-primary" (click)="modificarProducto()">Modificar</button>
-    <button *ngIf="!isModificar" type="button" class="btn btn-primary" (click)="crearProducto()">Guardar</button>
+    <button *ngIf="isModificar" 
+            type="button" 
+            class="btn btn-primary" 
+            style="background-color: var( --verdeColor) !important;"
+            (click)="modificarProducto()">Modificar</button>
+    <button *ngIf="!isModificar" 
+            type="button" 
+            class="btn btn-primary" 
+            style="background-color: var( --verdeColor) !important;"
+            (click)="crearProducto()">Guardar</button>
 </div>

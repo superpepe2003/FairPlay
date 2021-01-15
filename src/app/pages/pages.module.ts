@@ -14,7 +14,10 @@ import { TurnoComponent } from './turno/turno.component';
 import { NgSelect2Module } from 'ng-select2';
 import { PipesModule } from '../pipes/pipes.module';
 import { VentaComponent } from './venta/venta.component';
-import { CajaComponent } from './caja/caja.component';
+import { MovimientosComponent } from './movimientos/movimientos.component';
+import { BalancesComponent } from './balances/balances.component';
+import { AuthGuard } from '../guards/auth.guard';
+import { UsuarioComponent } from './usuario/usuario.component';
 
 
 @NgModule({
@@ -25,7 +28,9 @@ import { CajaComponent } from './caja/caja.component';
     ClienteComponent,
     TurnoComponent,
     VentaComponent,
-    CajaComponent
+    MovimientosComponent,
+    BalancesComponent,
+    UsuarioComponent
   ],
   imports: [
     CommonModule,
@@ -42,6 +47,9 @@ import { CajaComponent } from './caja/caja.component';
     DashboardComponent,
     ProductoComponent,
     PagesComponent
+  ],
+  providers: [
+    AuthGuard
   ]
 })
 export class PagesModule { }

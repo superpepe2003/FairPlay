@@ -53,26 +53,40 @@
     </div>
 </div>
 
+<a class="btn btn-app bg-success"
+    style="background-color: var( --verdeColor) !important;"
+   *ngIf="!this.cargando" 
+   (click)="abrirModal()">
+    <i class="fas fa-barcode"></i> Agregar
+</a>
+
+
 <div class="col-12" *ngIf="!this.cargando">
     <div class="card">
         <div class="card-body">
-            <h4 class="card-title">Ventas</h4><br>
             <div class="table-responsive">
                 <table class="table table-bordered">
                     <thead>
                         <tr>
-                            <th>Fecha</th>
-                            <th>Hora</th>
-                            <th>Monto</th>
-                            <th class="text-nowrap">Action</th>
+                            <th class="w75">Fecha</th>
+                            <th class="w75">Monto</th>
+                            <th class="w75">Tipo</th>
+                            <th>Descripción</th>
+                            <th class="text-nowrap w50">Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let item of ventas | sortFecha">
+                        <tr *ngFor="let item of movimientos | sortFecha">
                             <td>{{ item.fecha | date: 'dd/MM/yyyy' }}</td>
-                            <td>{{ item.fecha | date: 'H:mm' }}</td>
+                            <td>{{ item.monto }}</td>
+                            <td [ngClass]="(item.tipo === 1)? 'tipoIngreso': 'tipoGasto'">
+                                <div [ngSwitch]="item.tipo">
+                                    <div *ngSwitchCase="0">Gasto</div>
+                                    <div *ngSwitchCase="1">Ingreso</div>
+                                </div>
+                            </td>
                             <td>
-                                {{ item.monto | currency}}
+                                {{ item.descripcion }}
                             </td>
                             <td class="text-nowrap">
                                 <a class="btn btn-sm" (click)="abrirModal( item )" data-toggle="tooltip" data-original-title="Edit"> <i class="fas fa-pen text-inverse mr-3"></i> </a>

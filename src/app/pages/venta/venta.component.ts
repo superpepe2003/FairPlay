@@ -149,6 +149,8 @@ export class VentaComponent implements OnInit, OnDestroy {
     
     const modalRef = this.modalService.open(ModalListaTurnosComponent);
 
+    modalRef.componentInstance.turnosYaCargados = this.turnosElegidos;
+
     modalRef.result.then( resp => {
       let bandera = false;
       this.turnosElegidos.map( r => {

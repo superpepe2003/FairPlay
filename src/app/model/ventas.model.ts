@@ -26,7 +26,8 @@ export class Venta {
         public fecha: Date,
         public monto: number,
         public productos: ProductosVentas[],
-        public turnos: TurnosVentas[]
+        public turnos: TurnosVentas[],
+        public _id?: string
     ) {}
 
 }

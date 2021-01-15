@@ -1,0 +1,20 @@
+.tipoIngreso {
+    background-color: var(--verdeColor);
+    color: white;
+}
+
+.tipoGasto {
+    background-color: var(--rojoColor);
+    color: white;
+}
+
+.ngb-tp-minute, .ngb-tp-spacer{
+    display: none !important;
+}
+
+::ng-deep .my-class .modal-dialog {  
+max-height: 90%;
+    max-width: 90%;
+    width: 90%;
+    height: 90%;
+}

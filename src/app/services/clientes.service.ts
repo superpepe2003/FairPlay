@@ -4,6 +4,7 @@ import { map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { CargarClientes } from '../interfaces/cargar-clientes.interface';
 import { Cliente } from '../model/clientes.model';
+import { UsuarioService } from './usuario.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,13 +13,14 @@ export class ClientesService {
 
   base_url = environment.url;
 
-  constructor( private http: HttpClient ) { }
+  constructor( private http: HttpClient,
+               private user: UsuarioService ) { }
 
   cargarClientes( desde: number = 0, limit: number = 0 ) {
   
     const url = `${ this.base_url }/clientes?desde=${ desde }&hasta=${ limit }`;
 
-    return this.http.get<CargarClientes>( url ).pipe(
+    return this.http.get<CargarClientes>( url, this.user.headers ).pipe(
           map( resp => {
             if( ! resp ){ return { total: 0, clientes: [] }; }
             const clientes = resp.clientes.map(
@@ -38,7 +40,7 @@ export class ClientesService {
   
     const url = `${ this.base_url }/clientes/todos/`;
 
-    return this.http.get<CargarClientes>( url ).pipe(
+    return this.http.get<CargarClientes>( url, this.user.headers ).pipe(
           map( resp => {
             if ( ! resp ){ return { total: 0, clientes: [] }; }
             const clientes = resp.clientes.map(
@@ -71,18 +73,18 @@ export class ClientesService {
 
   crearCliente( cliente: Cliente ){
     const url = `${ this.base_url }/clientes`;
-    return this.http.post( url, cliente );
+    return this.http.post( url, cliente, this.user.headers );
   }
 
   modificarCliente( cliente: Cliente ){
     const url = `${ this.base_url }/clientes/${ cliente._id }`;
-    return this.http.put( url, cliente );
+    return this.http.put( url, cliente, this.user.headers );
   }
 
   eliminarCliente( id ) {
 
     const url = `${ this.base_url }/clientes/${ id }`;
-    return this.http.delete( url );
+    return this.http.delete( url, this.user.headers );
   }
 
 }

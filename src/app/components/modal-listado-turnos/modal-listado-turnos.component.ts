@@ -1,11 +1,12 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { NgbDate, NgbCalendar, NgbDateParserFormatter, NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDate, NgbCalendar, NgbDateParserFormatter, NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CargarTurnos } from '../../interfaces/cargar-turnos.interface';
 import { TurnosService } from '../../services/turnos.service';
 import { Subscription } from 'rxjs';
 import { Turno } from '../../model/turnos.model';
 import { NgbDateCustomParserFormatter } from 'src/app/model/ngbdatapickerformato';
 import * as moment from 'moment';
+import { ModalTurnoComponent } from '../modal-turno/modal-turno.component';
 
 @Component({
   selector: 'app-modal-listado-turnos',
@@ -25,12 +26,16 @@ export class ModalListadoTurnosComponent implements OnInit, OnDestroy {
   horarioMenor = 17;
   horarioMayor = 23;
 
+  nombre = 'Disponible';
+  tipo = '';
+
   semana = ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sábado'];
 
   horarios = [];
   dias = [];
 
-  constructor( private calendar: NgbCalendar,
+  constructor( private modalService: NgbModal,
+               private calendar: NgbCalendar,
                private turnoService: TurnosService,
                public activeModal: NgbActiveModal) { }
 
@@ -50,9 +55,12 @@ export class ModalListadoTurnosComponent implements OnInit, OnDestroy {
     this.cargando = true;
 
     let f1 = `${this.fecha.year}-${this.fecha.month}-${ this.fecha.day }`;
-    let f2 = `${this.fecha.year}-${this.fecha.month}-${ this.fecha.day + 7 }`;
+    let f2 = moment(f1, 'YYYY-MM-DD').add(7, 'd').format('YYYY-MM-DD');
 
-    let t = await this.turnoService.cargarTurnos( f1, f2, 'cobrado' ).toPromise();
+    console.log(f1);
+    console.log(f2);
+
+    let t = await this.turnoService.cargarTurnos( f1, f2).toPromise();
     this.totalTurnos += t.total;
 
     this.separarTurnos( t.turnos );
@@ -107,7 +115,6 @@ export class ModalListadoTurnosComponent implements OnInit, OnDestroy {
         if( this.turnos[i][0].hora < menor ) {
           menor = this.turnos[i][0].hora;
         }
-        // console.log(this.turnos[i].length);
         if( this.turnos[i][this.turnos[i].length - 1].hora > mayor ) {
           mayor = this.turnos[i][this.turnos[i].length].hora;
         }
@@ -138,17 +145,41 @@ export class ModalListadoTurnosComponent implements OnInit, OnDestroy {
 
   buscarTurno( dia, hora, cancha ) {
     let texto = 'Disponible';
+    this.nombre = 'Disponible';
+    console.log(this.turnos);
+    this.tipo = '';
     if( this.turnos[dia].length > 0 ) {
       let tur = this.turnos[dia].forEach((element: any) => {
-       
+
         if ( element.hora === hora && element.cancha == cancha ) {
-          texto = element.cliente.nombreCompleto;
+          texto = 'Existe';
+          this.nombre = element.cliente.nombreCompleto;
+          this.tipo = element.tipo;
         }
 
       });
       
     }
     return texto;
+  }
+
+  async seleccionarTurno( dia, hora, cancha) {
+    if( this.buscarTurno( dia, hora, cancha) === 'Disponible' ){
+      const modalRef = this.modalService.open(ModalTurnoComponent);
+
+      let f = Object.assign({} , this.fecha);
+      f.day += dia;
+      modalRef.componentInstance.fechaGrilla = f;
+      modalRef.componentInstance.horaGrilla = hora;
+      modalRef.componentInstance.canchaGrilla = cancha;
+
+      const resp = await modalRef.result;
+      if ( resp ) {
+        this.cargaTurnos();
+      }
+
+    }
+    return;
   }
 
 }

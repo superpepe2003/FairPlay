@@ -82,8 +82,21 @@
     </form>
 </div>
 <div class="modal-footer">
-    <button type="button" class="btn btn-default" data-dismiss="modal"
-            (click) = "activeModal.dismiss( nuevo )">Cancelar</button>
-    <button *ngIf="isModificar" type="button" class="btn btn-primary" (click)="modificarCliente()">Modificar</button>
-    <button *ngIf="!isModificar" type="button" class="btn btn-primary" (click)="crearCliente()">Guardar</button>
+    <button type="button" 
+            class="btn btn-default" 
+            style="background-color: var( --rojoColor) !important; color: white"
+            data-dismiss="modal"
+            (click) = "activeModal.dismiss( nuevo )">
+            Cancelar
+    </button>
+    <button *ngIf="isModificar" 
+            type="button" 
+            class="btn btn-primary" 
+            style="background-color: var( --verdeColor) !important;"
+            (click)="modificarCliente()">Modificar</button>
+    <button *ngIf="!isModificar" 
+            type="button" 
+            style="background-color: var( --verdeColor) !important;"
+            class="btn btn-primary" 
+            (click)="crearCliente()">Guardar</button>
 </div>

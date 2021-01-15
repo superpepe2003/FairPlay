@@ -7,6 +7,7 @@ import { ClientesService } from '../../services/clientes.service';
 import { Cliente } from '../../model/clientes.model';
 import { NgbDateCustomParserFormatter } from 'src/app/model/ngbdatapickerformato';
 import { I18n, CustomDatepickerI18n } from 'src/app/model/ngbdatapickeridioma';
+import { ToastrService } from 'ngx-toastr';
 
 // Declaramos las variables para jQuery
 declare var jQuery: any;
@@ -43,7 +44,8 @@ export class ModalClienteComponent implements OnInit {
                private clienteService: ClientesService,
                private calendar: NgbCalendar,
                private calendarConfig: NgbDatepickerConfig,
-               public activeModal: NgbActiveModal ) {
+               public activeModal: NgbActiveModal,
+               private toastr: ToastrService ) {
   }
 
   getCampo( campo: string ) {
@@ -83,6 +85,11 @@ export class ModalClienteComponent implements OnInit {
         .subscribe( resp => {
           this.resetearCampos();
           this.nuevo = true;
+          this.toastr.success('El cliente se creo correctamente', 
+                              'Creado',
+                              {
+                                timeOut: 3000,
+                              });
         }, (err) => {
           Swal.fire('Error', err.error.msg, 'error');
         });
@@ -104,10 +111,14 @@ export class ModalClienteComponent implements OnInit {
             this.resetearCampos();
             this.isModificar = false;
             this.cliente = null;
+            this.toastr.success('El cliente se modifico correctamente', 
+                              'Modificado',
+                              {
+                                timeOut: 3000,
+                              });
             this.activeModal.close();
             //this.cargaProductos();
           }, (err) => {
-            console.log('esto');
             Swal.fire('Error', err.error.msg, 'error');
           });
 

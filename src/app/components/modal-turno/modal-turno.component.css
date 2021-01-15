@@ -1,0 +1,9 @@
+.isDisabled {
+    pointer-events: none;
+    cursor: not-allowed;
+    color: rgb(104, 102, 102);
+  }
+  
+  .isDisabled:hover {
+    cursor: not-allowed;
+  }

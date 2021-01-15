@@ -1,16 +1,30 @@
 .disponible {
-    background-color: green;
+    background-color: var(--verdeColor);
     color: white;
     font-size: 1rem;
     overflow-x: hidden;
+    cursor: pointer;
+    padding: 2px;
 }
 
 .ocupado{
-    background-color: lightsalmon;
+    background-color: var(--turnosColor);
+    color: white;
     font-size: 1rem;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+    padding: 2px;
+}
+
+.ocupadoFijo{
+    background-color: var(--turnosFijo);
+    color: black;
+    font-size: 1rem;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    padding: 2px;
 }
 
 .modal-dialog {

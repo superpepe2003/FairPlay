@@ -2051,12 +2051,12 @@
     };
 
     _proto.open = function open() {
-      $__default['default'](SELECTOR_DATA_WIDGET$1).parent().addClass(CLASS_NAME_OPEN$1);
+      // TODO: $__default['default'](SELECTOR_DATA_WIDGET$1).parent().addClass(CLASS_NAME_OPEN$1);
       $__default['default'](SELECTOR_SEARCH_ICON).removeClass(CLASS_NAME_ICON_SEARCH).addClass(CLASS_NAME_ICON_CLOSE);
     };
 
     _proto.close = function close() {
-      $__default['default'](SELECTOR_DATA_WIDGET$1).parent().removeClass(CLASS_NAME_OPEN$1);
+      // TODO:$__default['default'](SELECTOR_DATA_WIDGET$1).parent().removeClass(CLASS_NAME_OPEN$1);
       $__default['default'](SELECTOR_SEARCH_ICON).removeClass(CLASS_NAME_ICON_CLOSE).addClass(CLASS_NAME_ICON_SEARCH);
     };
 
@@ -2603,10 +2603,10 @@
         this.collapse(openTreeview, openMenuLi);
       }
 
-      parentLi.addClass(CLASS_NAME_IS_OPENING$1);
+      // TODO: parentLi.addClass(CLASS_NAME_IS_OPENING$1);
       treeviewMenu.stop().slideDown(this._config.animationSpeed, function () {
-        parentLi.addClass(CLASS_NAME_OPEN$2);
-        $__default['default'](_this._element).trigger(expandedEvent);
+        // TODO: parentLi.addClass(CLASS_NAME_OPEN$2);
+        // TODO: $__default['default'](_this._element).trigger(expandedEvent);
       });
 
       if (this._config.expandSidebar) {
@@ -2618,12 +2618,13 @@
       var _this2 = this;
 
       var collapsedEvent = $__default['default'].Event(EVENT_COLLAPSED$4);
-      parentLi.removeClass(CLASS_NAME_IS_OPENING$1 + " " + CLASS_NAME_OPEN$2);
+      // TODO: parentLi.removeClass(CLASS_NAME_IS_OPENING$1 + " " + CLASS_NAME_OPEN$2);
       treeviewMenu.stop().slideUp(this._config.animationSpeed, function () {
         $__default['default'](_this2._element).trigger(collapsedEvent);
         treeviewMenu.find(SELECTOR_OPEN + " > " + SELECTOR_TREEVIEW_MENU).slideUp();
-        treeviewMenu.find(SELECTOR_OPEN).removeClass(CLASS_NAME_OPEN$2);
+        // TODO: treeviewMenu.find(SELECTOR_OPEN).removeClass(CLASS_NAME_OPEN$2);
       });
+      
     };
 
     _proto.toggle = function toggle(event) {

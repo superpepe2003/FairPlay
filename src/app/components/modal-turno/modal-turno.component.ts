@@ -28,7 +28,12 @@ export class ModalTurnoComponent implements OnInit {
 
   @Input() turno: Turno = null;
   @Input() isModificar = false;
+  @Input() fechaGrilla = null;
+  @Input() horaGrilla = null;
+  @Input() canchaGrilla = null;
 
+  isGrilla = false;
+  
   public turnoForm = this.fb.group({
     cancha: ['', [ Validators.required ]],
     fecha: ['', [ Validators.required ]],
@@ -105,12 +110,21 @@ export class ModalTurnoComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
     this.cargarSelect();
     this.fecha = this.calendar.getToday();
     if( this.isModificar ) {
       this.cargarCampos();
     } else {
       this.resetearCampos();
+    }
+    
+
+    if( this.fechaGrilla ) {
+      this.fecha = this.fechaGrilla;
+      this.hora = { hour: Number(this.horaGrilla), minute: 0, second:0 };
+      this.cancha = this.canchaGrilla.toString();
+      this.isGrilla = true;
     }
   }
 
@@ -127,8 +141,6 @@ export class ModalTurnoComponent implements OnInit {
     let turno: Turno;
     turno = this.turnoForm.value;
 
-    console.log(turno);
-
     this.turnoService.crearTurno( turno )
         .subscribe( resp => {
           this.resetearCampos();
@@ -138,6 +150,9 @@ export class ModalTurnoComponent implements OnInit {
                               {
                                 timeOut: 3000,
                               });
+          if( this.isGrilla ) {
+            this.activeModal.close(true);
+          }
         }, (err) => {
           Swal.fire('Error', err.error.msg, 'error');
         });
@@ -145,7 +160,7 @@ export class ModalTurnoComponent implements OnInit {
   }
 
   modificarTurno() {
-    console.log( this.turnoForm );
+
     if ( this.turnoForm.invalid ) {
       return;
     }
@@ -158,7 +173,6 @@ export class ModalTurnoComponent implements OnInit {
     this.turno.estado = this.turnoForm.get('estado').value;
     this.turno.tipo = this.turnoForm.get('tipo').value;
 
-    console.log( this.turno );
     this.turnoService.modificarTurno( this.turno )
         .subscribe( resp => {          
           this.toastr.success('El turno se modifico correctamente', 
@@ -181,14 +195,17 @@ export class ModalTurnoComponent implements OnInit {
       descripcion: '',
       tipo: 'normal',
     });
-    this.fecha = this.calendar.getToday();
+    this.fecha = this.fecha;
     this.hora = { hour: 16, minute: 0, second: 0 };
     this.turnoService.id_turno = null;
     this.nuevo = false;
+
+    if( this.clientes.length > 0 ) {
+      this.cliente = this.clientes[0].id;
+    }
   }
 
   formNoValido() {
-    // console.log(this.turnoForm);
     if ( this.turnoForm.hasError('existe') ) {
       return true;
     }

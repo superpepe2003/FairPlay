@@ -1,0 +1,9 @@
+.tipoIngreso {
+    background-color: var(--verdeColor);
+    color: white;
+}
+
+.tipoGasto {
+    background-color: var(--rojoColor);
+    color: white;
+}

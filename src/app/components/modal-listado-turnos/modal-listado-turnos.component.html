@@ -54,8 +54,8 @@
                     <table class="table table-bordered">
                         <thead>
                             <tr>
-                                <th></th>
-                                <th class="w150" *ngFor="let item of dias">{{ item }}</th>
+                                <th class="w50"></th>
+                                <th class="w150" *ngFor="let item of dias; let i = index">{{ item}} {{ fecha.day + i }}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -63,34 +63,89 @@
                                 <td>
                                     {{ item }}
                                 </td>
-                                <td>
-                                    <h5 [ngClass] = "buscarTurno(0, item, 1) === 'Disponible'? 'disponible': 'ocupado'"> {{ buscarTurno(0, item,1) }} </h5>
-                                    <h5 [ngClass] = "buscarTurno(0, item, 2) === 'Disponible'? 'disponible': 'ocupado'"> {{ buscarTurno(0, item,2) }} </h5>
+                                <ng-container *ngFor="let dia of [0,1,2,3,4,5,6]">
+                                    <td>
+                                        <h5 *ngFor="let cancha of [1,2]"
+                                            (click) = "seleccionarTurno(dia,item,cancha)"
+                                            [ngClass] = "{'disponible': buscarTurno(dia, item, cancha) == 'Disponible', 
+                                                          'ocupado': nombre != 'Disponible' && tipo != 'fijo',
+                                                          'ocupadoFijo': nombre != 'Disponible' && tipo == 'fijo'}"> 
+                                            {{ nombre }} 
+                                        </h5>                                        
+                                    </td>
+                                </ng-container>
+                                <!-- <td>
+                                    <h5 (click) = "seleccionarTurno(0,item,1)"
+                                        [ngClass] = "{'disponible': buscarTurno(0, item, 1) == 'Disponible', 
+                                                      'ocupado': nombre != 'Disponible' && tipo != 'fijo',
+                                                      'ocupadoFijo': nombre != 'Disponible' && tipo == 'fijo'}"> 
+                                        {{ nombre }} 
+                                    </h5>
+                                    <h5 (click) = "seleccionarTurno(0,item,2)"
+                                        [ngClass] = "buscarTurno(0, item, 2) === 'Disponible'? 'disponible': 'ocupado'"> 
+                                        {{ buscarTurno(0, item,2) }} 
+                                    </h5>
                                 </td>
                                 <td>
-                                    <h5 [ngClass] = "buscarTurno(1, item, 1) === 'Disponible'? 'disponible': 'ocupado'"> {{ buscarTurno(1, item,1) }} </h5>
-                                    <h5 [ngClass] = "buscarTurno(1, item, 2) === 'Disponible'? 'disponible': 'ocupado'"> {{ buscarTurno(1, item,2) }} </h5>
+                                    <h5 (click) = "seleccionarTurno(1,item,1)"
+                                        [ngClass] = "buscarTurno(1, item, 1) === 'Disponible'? 'disponible': 'ocupado'"> 
+                                        {{ buscarTurno(1, item,1) }} 
+                                    </h5>
+                                    <h5 (click) = "seleccionarTurno(1,item,2)"
+                                        [ngClass] = "buscarTurno(1, item, 2) === 'Disponible'? 'disponible': 'ocupado'"> 
+                                        {{ buscarTurno(1, item,2) }} 
+                                    </h5>
                                 </td>
                                 <td>
-                                    <h5 [ngClass] = "buscarTurno(2, item, 1) === 'Disponible'? 'disponible': 'ocupado'"> {{ buscarTurno(2, item,1) }} </h5>
-                                    <h5 [ngClass] = "buscarTurno(2, item, 2) === 'Disponible'? 'disponible': 'ocupado'"> {{ buscarTurno(2, item,2) }} </h5>
+                                    <h5 (click) = "seleccionarTurno(2,item,1)"
+                                        [ngClass] = "buscarTurno(2, item, 1) === 'Disponible'? 'disponible': 'ocupado'"> 
+                                        {{ buscarTurno(2, item,1) }} 
+                                    </h5>
+                                    <h5 (click) = "seleccionarTurno(2,item,2)"
+                                        [ngClass] = "buscarTurno(2, item, 2) === 'Disponible'? 'disponible': 'ocupado'"> 
+                                        {{ buscarTurno(2, item,2) }} 
+                                    </h5>
                                 </td>
                                 <td>
-                                    <h5 [ngClass] = "buscarTurno(3, item, 1) === 'Disponible'? 'disponible': 'ocupado'"> {{ buscarTurno(3, item,1) }} </h5>
-                                    <h5 [ngClass] = "buscarTurno(3, item, 2) === 'Disponible'? 'disponible': 'ocupado'"> {{ buscarTurno(3, item,2) }} </h5>
+                                    <h5 (click) = "seleccionarTurno(3,item,1)"
+                                        [ngClass] = "buscarTurno(3, item, 1) === 'Disponible'? 'disponible': 'ocupado'"> 
+                                        {{ buscarTurno(3, item,1) }} 
+                                    </h5>
+                                    <h5 (click) = "seleccionarTurno(3,item,2)"
+                                        [ngClass] = "buscarTurno(3, item, 2) === 'Disponible'? 'disponible': 'ocupado'"> 
+                                        {{ buscarTurno(3, item,2) }} 
+                                    </h5>
                                 </td>
                                 <td>
-                                    <h5 [ngClass] = "buscarTurno(4, item, 1) === 'Disponible'? 'disponible': 'ocupado'"> {{ buscarTurno(4, item,1) }} </h5>
-                                    <h5 [ngClass] = "buscarTurno(4, item, 2) === 'Disponible'? 'disponible': 'ocupado'"> {{ buscarTurno(4, item,2) }} </h5>
+                                    <h5 (click) = "seleccionarTurno(4,item,1)"
+                                        [ngClass] = "buscarTurno(4, item, 1) === 'Disponible'? 'disponible': 'ocupado'"> 
+                                        {{ buscarTurno(4, item,1) }} 
+                                    </h5>
+                                    <h5 (click) = "seleccionarTurno(4,item,2)"
+                                        [ngClass] = "buscarTurno(4, item, 2) === 'Disponible'? 'disponible': 'ocupado'"> 
+                                        {{ buscarTurno(4, item,2) }} 
+                                    </h5>
                                 </td>
                                 <td>
-                                    <h5 [ngClass] = "buscarTurno(5, item, 1) === 'Disponible'? 'disponible': 'ocupado'"> {{ buscarTurno(5, item,1) }} </h5>
-                                    <h5 [ngClass] = "buscarTurno(5, item, 2) === 'Disponible'? 'disponible': 'ocupado'"> {{ buscarTurno(5, item,2) }} </h5>
+                                    <h5 (click) = "seleccionarTurno(5,item,1)"
+                                        [ngClass] = "buscarTurno(5, item, 1) === 'Disponible'? 'disponible': 'ocupado'">
+                                        {{ buscarTurno(5, item,1) }} 
+                                    </h5>
+                                    <h5 (click) = "seleccionarTurno(5,item,2)"
+                                        [ngClass] = "buscarTurno(5, item, 2) === 'Disponible'? 'disponible': 'ocupado'">
+                                        {{ buscarTurno(5, item,2) }} 
+                                    </h5>
                                 </td>
                                 <td>
-                                    <h5 [ngClass] = "buscarTurno(6, item, 1) === 'Disponible'? 'disponible': 'ocupado'"> {{ buscarTurno(6, item, 1) }} </h5>
-                                    <h5 [ngClass] = "buscarTurno(6, item, 2) === 'Disponible'? 'disponible': 'ocupado'"> {{ buscarTurno(6, item, 2) }} </h5>
-                                </td>                            
+                                    <h5 (click) = "seleccionarTurno(6,item,1)"
+                                        [ngClass] = "buscarTurno(6, item, 1) === 'Disponible'? 'disponible': 'ocupado'"> 
+                                        {{ buscarTurno(6, item, 1) }} 
+                                    </h5>
+                                    <h5 (click) = "seleccionarTurno(6,item,2)"
+                                        [ngClass] = "buscarTurno(6, item, 2) === 'Disponible'? 'disponible': 'ocupado'"> 
+                                        {{ buscarTurno(6, item, 2) }} 
+                                    </h5>
+                                </td>                             -->
                             </tr>
                         </tbody>
                     </table>

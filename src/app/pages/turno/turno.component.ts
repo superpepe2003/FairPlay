@@ -48,7 +48,7 @@ export class TurnoComponent implements OnInit, OnDestroy {
     this.calendarConfig.startDate = this.calendar.getToday();
     this.fecha = this.calendar.getToday();
     this.cargaTurnos();
-    this.cargaSemana();
+    // this.cargaSemana();
   }
 
   ngOnDestroy() {
@@ -58,7 +58,7 @@ export class TurnoComponent implements OnInit, OnDestroy {
 
   cargaTurnos() {
     this.cargando = true;
-    this.turnosSub$.push( this.turnoService.cargarTurnos( `${this.fecha.year}-${this.fecha.month}-${this.fecha.day}`, '', 'cobrado' )
+    this.turnosSub$.push( this.turnoService.cargarTurnos( `${this.fecha.year}-${this.fecha.month}-${this.fecha.day}`, '' )
         .subscribe( ({ turnos, total }) => {
           this.turnos = turnos;
           this.totalTurnos = total;
@@ -71,14 +71,12 @@ export class TurnoComponent implements OnInit, OnDestroy {
   cargaSemana() {
     this.cargando = true;
     const fecha1 = `${ moment().format('YYYY') }-${ moment().format('MM') }-${ moment().format('DD') }`;
-    const fecha2 = moment(fecha1).add(7, 'days').format('YYYY-MM-DD').toString();
+    const fecha2 = moment(fecha1).add(7, 'days').format('YYYY-MM-DD');
     this.turnosSub$.push( this.turnoService.cargarTurnos( fecha1, fecha2 )
         .subscribe( ({ turnos, total }) => {
           
           this.turnosTotal = turnos;
           this.totalSemana = total;
-
-          console.log(this.turnosTotal);
 
         })
     );

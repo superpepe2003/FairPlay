@@ -6,6 +6,7 @@ import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
 import * as moment from 'moment';
 import { CargarVentas } from '../interfaces/cargar-ventas.interface';
 import { map } from 'rxjs/operators';
+import { UsuarioService } from './usuario.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,17 +15,17 @@ export class VentasService {
 
   base_url = environment.url;
 
-  constructor( private http: HttpClient) { }
+  constructor( private http: HttpClient, private user: UsuarioService) { }
 
   listarVenta( fecha1: NgbDate, fecha2: NgbDate){
     const f1 = moment( `${ fecha1.year }-${ fecha1.month }-${ fecha1.day }`, 'YYYY-MM-DD').format('YYYY-MM-DD').toString();;
     const f2 = moment( `${ fecha2.year }-${ fecha2.month }-${ fecha2.day }`, 'YYYY-MM-DD').format('YYYY-MM-DD').toString();
 
     const url = `${ this.base_url }/ventas?fechaInicial=${ f1 }&fechaFinal=${ f2 }`;
-    return this.http.get<CargarVentas>(url).pipe(
+    return this.http.get<CargarVentas>(url, this.user.headers).pipe(
         map( resp => {
           const ventas = resp.ventas.map(
-             v => new Venta( v.fecha, v.monto, v.productos, v.turnos )
+             v => new Venta( v.fecha, v.monto, v.productos, v.turnos, v._id )
           );
 
           return {
@@ -38,7 +39,7 @@ export class VentasService {
 
   crearVenta( venta: Venta) {
     const url = `${ this.base_url}/ventas`;
-    return this.http.post(url, venta);
+    return this.http.post(url, venta, this.user.headers);
   }
 
 }

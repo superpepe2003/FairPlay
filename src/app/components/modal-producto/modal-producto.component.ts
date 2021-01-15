@@ -81,8 +81,6 @@ export class ModalProductoComponent implements OnInit {
     this.producto.pCompra = this.productoForm.get('pCompra').value || this.producto.pCompra ;
     this.producto.stock = this.productoForm.get('stock').value || this.producto.stock ;
 
-    console.log(this.producto);
-
     this.productoService.modificarProducto( this.producto )
         .subscribe( resp => {
           this.toastr.success('El producto se modifico correctamente', 

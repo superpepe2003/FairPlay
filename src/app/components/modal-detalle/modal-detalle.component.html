@@ -1,0 +1,102 @@
+<div class="modal-header" style="background-color: var(--verdeColor); color: white;">
+    <h4 class="modal-title">Detalle</h4>
+    <button type="button" 
+            class="close" 
+            data-dismiss="modal" 
+            aria-label="Close"
+            (click)="activeModal.dismiss( )">
+    <span aria-hidden="true">×</span>
+    </button>
+</div>
+<div class="modal-body">
+    <div *ngIf="isMovimiento">
+
+        <div class="row">
+            <div class="col-6">
+                <h3>
+                    <div [ngSwitch]="this.movimiento.tipo">
+                        <div *ngSwitchCase="0">Gasto</div>
+                        <div *ngSwitchCase="1">Ingreso</div>            
+                    </div>
+                </h3>
+            </div>
+            <div class="col-6">
+                <h5 style = "text-align: right;">{{ this.movimiento.fecha | date: 'dd/MM/yyyy' }}</h5>
+            </div>
+        </div>
+        <hr>
+        
+        <h5 [ngClass] = "this.movimiento.tipo === 1 ? 'tipoIngreso': 'tipoGasto' ">
+            {{ this.movimiento.monto | currency }}
+        </h5>
+        <hr>
+        <p>{{ this.movimiento.descripcion }}</p>
+    </div>
+    <div *ngIf="!isMovimiento">
+        <h3>
+            Venta
+        </h3>
+        <div class="row">
+            <div class="col-6">
+                <h5>{{ this.venta.monto | currency }}</h5>
+            </div>
+            <div class="col-6">
+                <h5 style = "text-align: right;">{{ this.venta.fecha | date: 'dd/MM/yyyy' }}</h5>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Turnos</h4><br>
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Hora</th>
+                                        <th>Cancha</th>
+                                        <th>Precio</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of venta.turnos">
+                                        <td> {{ item.turno['hora']}} </td>
+                                        <td> {{ item.turno['cancha'] }} </td>                                    
+                                        <td> {{ item.monto | currency }} </td>
+                                    </tr>
+                                </tbody>
+                            </table>        
+                        </div>
+                    </div>
+                </div>    
+            </div>
+            <div class="col-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h4 class="card-title">Productos</h4><br>
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Producto</th>
+                                        <th>Precio U</th>
+                                        <th>Cantidad</th>
+                                        <th>Monto</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of venta.productos">
+                                        <td> {{ item.producto['nombre']}} </td>
+                                        <td> {{ item.producto['pVenta'] | currency }} </td>
+                                        <td> {{ item.cantidad }} </td>
+                                        <td> {{ item.monto }} </td>
+                                    </tr>
+                                </tbody>
+                            </table>        
+                        </div>
+                    </div>
+                </div>    
+            </div>           
+        </div>
+    </div>
+</div>

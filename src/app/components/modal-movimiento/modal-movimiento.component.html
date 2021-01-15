@@ -1,0 +1,95 @@
+<div class="modal-header">
+    <h4 class="modal-title">Gasto</h4>
+    <button type="button" 
+            class="close" 
+            data-dismiss="modal" 
+            aria-label="Close"
+            (click)="activeModal.dismiss( nuevo )">
+    <span aria-hidden="true">×</span>
+    </button>
+</div>
+<div class="modal-body">
+
+    <form id="clientForm"
+        autocomplete="off"
+        [formGroup] = "formMovimiento"
+        (ngSubmit) = "crearMovimiento()">
+
+        <h3 class="box-title m-t-40 m-b-0" *ngIf="!isModificar">Registrar nuevo Gasto</h3>
+        <h3 class="box-title m-t-40 m-b-0" *ngIf="isModificar">Modificar Gasto</h3>
+        
+        <div class="form-group input-group mb-3">
+            <div class="form-group input-group" >
+                <div class="input-group" dir="ltr">
+                    <button style="max-width: 70px !important;" 
+                            class="form-control input-group-addon" 
+                            (click)="dmodal.toggle()" 
+                            type="button">
+                        <i class="fas fa-calendar-day"></i>
+                    </button>
+                    <input class="form-control" 
+                        placeholder="dd/mm/yyyy" 
+                        name="dp"  
+                        ngbDatepicker 
+                        [(ngModel)] = "fecha"
+                        [ngModelOptions]="{standalone: true}"
+                        [firstDayOfWeek] = "6"
+                        [readonly]="true"
+                        #dmodal="ngbDatepicker">                    
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group input-group mb-3">
+            <div class="input-group-prepend">
+            <span class="input-group-text">
+                <i class="fas fa-money-bill-wave"></i>
+            </span>
+            </div>
+            <input class="form-control" 
+                type="number" 
+                placeholder="Monto"
+                formControlName="monto">
+        </div>
+
+        <div class="form-group">
+            <label>Tipo</label>
+            <ng-select2 class="select2"
+                        [data]="tipo"
+                        formControlName = "tipo"                        
+                        [options] = "options">                              
+            </ng-select2>                  
+        </div>
+
+        <div class="form-group input-group mb-3">
+            <div class="input-group-prepend">
+            <span class="input-group-text">
+                <i class="fas fa-file-medical"></i>
+            </span>
+            </div>
+            <input class="form-control" 
+                type="text" 
+                placeholder="Descripción"
+                formControlName="descripcion">
+        </div>
+        
+    </form>
+</div>
+<div class="modal-footer">
+    <button type="button" 
+            class="btn btn-default" 
+            data-dismiss="modal"
+            style="background-color: var( --rojoColor) !important; color: white"
+            (click) = "activeModal.dismiss( nuevo )">Cancelar</button>
+    <button *ngIf="isModificar" 
+            type="button" 
+            style="background-color: var( --verdeColor) !important;"
+            class="btn btn-primary" 
+            (click)="modificarMovimiento()">Modificar</button>
+    <button *ngIf="!isModificar" 
+            type="button" 
+            style="background-color: var( --verdeColor) !important;"
+            class="btn btn-primary" 
+            (click)="crearMovimiento()">Guardar</button>
+</div>
+

@@ -23,6 +23,7 @@
 </div>
 
 <a class="btn btn-app bg-success"
+   style="background-color: var( --verdeColor) !important;"
    *ngIf="!this.cargando" 
    (click)="abrirModal()">
     <i class="fas fa-barcode"></i> Agregar
@@ -53,8 +54,9 @@
                             </td>
                             <td>{{ item.stock }}</td>
                             <td class="text-nowrap">
-                                <a class="btn btn-sm" (click)="abrirModal( item )" data-toggle="tooltip" data-original-title="Edit"> <i class="fas fa-pen text-inverse mr-3"></i> </a>
-                                <a class="btn btn-sm" (click)="deleteProducto( item )" data-toggle="tooltip" data-original-title="Close"> <i class="fas fa-times text-danger"></i> </a>
+                                <a class="btn btn-sm" title="Modificar Producto" (click)="abrirModal( item )" data-toggle="tooltip" data-original-title="Edit"> <i class="fas fa-pen text-inverse"></i> </a>
+                                <!-- <a class="btn btn-sm" title="Eliminar Producto" (click)="deleteProducto( item )" data-toggle="tooltip" data-original-title="Close"> <i class="fas fa-times text-danger"></i> </a> -->
+                                <a class="btn btn-sm" title="Agregar Stock" (click)="agregarStock( item )" data-toggle="tooltip" data-original-title="Stock"> <i class="fas fa-cart-plus text-primary"></i> </a>
                             </td>
                         </tr>
                     </tbody>

@@ -12,6 +12,7 @@ import { NgbDate, NgbDatepickerConfig, NgbCalendar, NgbActiveModal } from '@ng-b
 export class ModalListaTurnosComponent implements OnInit, OnDestroy {
 
   turnos: Turno[] = [];
+  turnosYaCargados: Turno[] = [];
   cargando = false;
   turnosSub$: Subscription;
   fecha: NgbDate;
@@ -38,6 +39,19 @@ export class ModalListaTurnosComponent implements OnInit, OnDestroy {
     this.turnosSub$ = this.turnoService.cargarTurnos( `${this.fecha.year}-${this.fecha.month}-${this.fecha.day}` )
         .subscribe( ({ turnos, total }) => {
           this.turnos = turnos;
+
+          this.turnos = this.turnos.filter( resp => {
+            let bandera = false;
+            this.turnosYaCargados.forEach( r => {
+              if( r._id === resp._id) {
+                bandera = true;
+              }
+            });
+            if( !bandera ) {
+              return resp;
+            }
+          })
+
           this.cargando = false;
         });
   }

@@ -1,5 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
 
+:root {
+    --verdeColor : rgb(62, 100, 67);
+    --rojoColor: rgb(209, 15, 80);
+    --turnosColor: rgb(250, 93, 145);
+    --turnosFijo: rgb(118, 248, 168);
+}
+
 #menu {
     background-color: rgb(43, 169, 43);
 }

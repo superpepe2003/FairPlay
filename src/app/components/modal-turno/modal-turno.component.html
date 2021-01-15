@@ -20,12 +20,16 @@
         <h3 class="box-title m-t-40 m-b-0" *ngIf="isModificar">Modificar Turno</h3>
 
         <small *ngIf="formNoValido()" class="text-danger">
-            <div class="alert alert-danger" role="alert">            
+            <div class="alert alert-danger" 
+                 style="background-color: var( --rojoColor) !important; color: white"
+                 role="alert">            
                 Ya existe turno en ese horario y día        
             </div>
         </small>
         <small *ngIf="!formNoValido()" class="text-danger">
-            <div class="alert alert-primary" role="alert">            
+            <div class="alert alert-primary" 
+                 style="background-color: var( --verdeColor) !important; color: white"
+                 role="alert">            
                 Turno disponible
             </div>
         </small>
@@ -46,7 +50,8 @@
                         [data]="canchas"
                         [(ngModel)]="cancha"  
                         [ngModelOptions] = "{standalone: true}"
-                        [options] = "options">                              
+                        [options] = "options"
+                        [ngClass]="{ isDisabled: isGrilla }">                              
             </ng-select2>                  
         </div>
 
@@ -64,7 +69,11 @@
                         [firstDayOfWeek] = "6"
                         [readonly]="true"
                         #dmodal="ngbDatepicker">
-                    <button style="max-width: 70px !important;" class="form-control input-group-addon" (click)="dmodal.toggle()" type="button">
+                    <button style="max-width: 70px !important;" 
+                            class="form-control input-group-addon" 
+                            (click)="dmodal.toggle()" 
+                            type="button"
+                            [ngClass]="{ isDisabled: isGrilla }">
                         <i class="fas fa-calendar-day"></i>
                     </button>
                 </div>
@@ -75,7 +84,8 @@
                 <ngb-timepicker class="ocultarminuto"
                                 [(ngModel)]="hora"
                                 [ngModelOptions]="{standalone: true}"
-                                minute-step = "0">
+                                minute-step = "0"
+                                [ngClass]="{ isDisabled: isGrilla }">
                 </ngb-timepicker>
             </div>
         </div>
@@ -116,10 +126,21 @@
     </form>
 </div>          
 <div class="modal-footer">
-    <button type="button" class="btn btn-default" data-dismiss="modal"
+    <button type="button" 
+            class="btn btn-default"
+            data-dismiss="modal"
+            style="background-color: var( --rojoColor) !important; color: white"
             (click) = "activeModal.dismiss( nuevo )">Cancelar</button>
-    <button *ngIf="isModificar" type="button" class="btn btn-primary" (click)="modificarTurno()">Modificar</button>
-    <button *ngIf="!isModificar" type="button" class="btn btn-primary" (click)="crearTurno()">Guardar</button>
+    <button *ngIf="isModificar" 
+            type="button" 
+            class="btn btn-primary" 
+            style="background-color: var( --verdeColor) !important;"
+            (click)="modificarTurno()">Modificar</button>
+    <button *ngIf="!isModificar" 
+            type="button" 
+            class="btn btn-primary" 
+            style="background-color: var( --verdeColor) !important;"
+            (click)="crearTurno()">Guardar</button>
 </div>
 
 

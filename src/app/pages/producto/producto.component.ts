@@ -48,7 +48,6 @@ export class ProductoComponent implements OnInit, OnDestroy {
   
   cambiarPagina( desde: number ) {
     this.desde += desde;
-    console.log(desde);
     if( this.desde < 0 ) {
       this.desde = 0;
       return;
@@ -114,6 +113,26 @@ export class ProductoComponent implements OnInit, OnDestroy {
 
       }
     });
+  }
+
+  async agregarStock( item: Producto ){
+    const { value } = await Swal.fire({
+      title: 'Stock',
+      input: 'number',
+      inputLabel: `Cantidad de ${ item.nombre } comprada`,
+      inputValue: '0',
+      showCancelButton: true,
+      inputValidator: (value) => {
+        if (!value) {
+          return 'escribe un valor'
+        }        
+      }
+    });
+
+    if( value ) {
+      item.stock += Number(value);
+      await this.productoService.modificarProducto( item ).toPromise();
+    }
   }
   
   ngOnDestroy() {
