@@ -5,70 +5,20 @@
                 <input tabindex="0" type="text" class="form-control" placeholder="Buscar por nombre o codigo de Barra..." id="txtTermino"/>
             </div>
         </div>
-        <a class="btn btn-app bg-success"
-           style="background-color: var( --verdeColor) !important;" 
-           (click)="abrirModal()">
-           <i class="far fa-futbol fa-2x"></i>Turno
-        </a>
         <a class="btn btn-app bg-primary"
            style="background-color: var( --rojoColor) !important;"
            (click)="Guardar()">
-           <i class="fas fa-check-circle"></i>Cobrar
+           <i class="fas fa-check-circle"></i>Registrar Compra
         </a>
     </div>
     <div class="col-4">
         <div class="card">
             <div class="card-body">
-                <p> Productos:  {{ totalProductos }}</p>
-                <p> turnos   : {{ totalTurnos }}</p>
-                <hr>
                 <h5 style="margin-bottom: 0 !important;"> Total    : {{ total }} </h5>
             </div>
         </div>
     </div>
 </div>
-
-
-<div class="col-12" *ngIf="this.turnosElegidos.length > 0">
-<div class="card">
-    <div class="card-body">
-        <h4 class="card-title">Turnos Cobrados</h4>            
-        <div class="table-responsive">
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th class="w75">Fecha</th>
-                        <th class="w75">Hora</th>
-                        <th>Cliente</th>
-                        <th class="w100">Precio</th>
-                        <th class="w50">Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let item of this.turnosElegidos">
-                        <td>{{ item.fecha | date: 'dd/MM/yyyy' }}</td>
-                        <td>
-                            {{ item.hora }}
-                        </td>
-                        <td>{{ item.cliente['nombreCompleto'] }} </td>
-                        <td>
-                            <input class="w100" type="number" 
-                                   value = "{{ item.precio }}"
-                                   (change) = "calcularTurno( item, $event )">   
-                        </td>                        
-                        <td class="text-nowrap">                                
-                            <a class="btn btn-sm" (click)="eliminarTurno( item )" data-toggle="tooltip" data-original-title="Close"> <i class="fas fa-minus-circle fa-2x text-danger"></i> </a>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-    </div>
-</div>
-</div>
-
-
 
 
 <div class="col-12" *ngIf="this.productosElegidos.length > 0">
@@ -80,10 +30,10 @@
                 <thead>
                     <tr>
                         <th>Nombre</th>
-                        <th class="w75">Precio</th>
+                        <th class="w75">Precio Compra</th>
                         <th class="w100">Existencias</th>
-                        <th class="w100">Cantidad</th>
                         <th class="w100">Total</th>
+                        <th class="w100">Cantidad</th>
                         <th class="w75">Action</th>
                     </tr>
                 </thead>
@@ -92,14 +42,18 @@
                         <td>{{ item.producto.nombre }}</td>
                         <td>
                             <input class="w75" type="number" 
-                                   value = "{{ item.producto.pVenta }}"
+                                   value = "{{ item.producto.pCompra }}"
                                    (change) = "calcularProducto( item, $event )">   
                         </td>
                         <td>
                             {{ item.producto.stock }}
                         </td>
-                        <td>{{ item.cantidad }} </td>
                         <td>{{ item.monto }}</td>
+                        <td>
+                            <input class="w75" type="number" 
+                                   value = "{{ item.cantidad }}"
+                                   (change) = "calcularProducto( item, $event )">
+                        </td>
                         <td class="text-nowrap">
                             <a class="btn btn-sm" (click)="incrementar( item )" data-toggle="tooltip" data-original-title="Edit"> <i class="fas fa-plus-circle fa-2x text-inverse"></i> </a>
                             <a class="btn btn-sm" (click)="decrementar( item )" data-toggle="tooltip" data-original-title="Close"> <i class="fas fa-minus-circle fa-2x text-danger"></i> </a>

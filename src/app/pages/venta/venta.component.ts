@@ -63,7 +63,11 @@ export class VentaComponent implements OnInit, OnDestroy {
       switchMap( texto => this.productosService.buscarPorCodigo( texto ) )
     );
     this.sub$ = input$.subscribe( resp => {
-
+      
+      if ( resp.stock === 0 ) {
+        Swal.fire('Error', 'No tienes Stock suficiente', 'error').then();
+        return;
+      }
       bandera = true;
       this.productosElegidos.map( r => {
         if( r.producto.codBarra == resp.codBarra ) {
@@ -72,7 +76,7 @@ export class VentaComponent implements OnInit, OnDestroy {
             r.cantidad += 1;
             r.monto = r.producto.pVenta * r.cantidad;                      
             return r;
-          } else {
+          } else {            
             Swal.fire('Error', 'No tienes Stock suficiente', 'error').then();
           }
         }
@@ -134,17 +138,20 @@ export class VentaComponent implements OnInit, OnDestroy {
     this.calcularTotales();
   }
 
+  // CALCULA EL 
   calcularTurno( item: Turno, event ) {
     item.precio = Number(event.target.value);
     this.calcularTotales();
   }
 
+  // ELIMINO 1 TURNO A COBRAR
   eliminarTurno( item: Turno) {
     let index = this.turnosElegidos.indexOf( item );
     this.turnosElegidos.splice( index, 1);
     this.calcularTotales();
   }
 
+  // ABRO EL MODAL PARA ELEGIR LOS TURNOS A COBRAR
   abrirModal( ) {
     
     const modalRef = this.modalService.open(ModalListaTurnosComponent);
@@ -170,6 +177,8 @@ export class VentaComponent implements OnInit, OnDestroy {
 
   }
 
+
+  // GUARDO LA VENTA EN LA BASE DE DATOS
   Guardar() {
     // Tengo que transformar tanto los productos como los turnos al modelo aceptado de solo el id
 
@@ -186,11 +195,13 @@ export class VentaComponent implements OnInit, OnDestroy {
 
 
     this.ventaService.crearVenta( venta ).subscribe( resp => {
+
       this.turnosElegidos = [];
       this.productosElegidos = [];
       this.totalProductos = 0;
       this.totalProductos = 0;
       this.total = 0;
+        
       return;
     },
     error => Swal.fire('Error', 'La venta no se pudo guardar', 'error').then());

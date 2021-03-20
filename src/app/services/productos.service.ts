@@ -42,8 +42,10 @@ export class ProductosService {
   }
 
   modificarProducto( producto: Producto ){
+
     const url = `${ this.base_url }/productos/${ producto._id }`;
-    return this.http.put( url, producto, this.user.headers );
+    return this.http.put( url, producto, this.user.headers ).pipe( tap( r => console.log ));
+
   }
 
   eliminarProducto( id ) {

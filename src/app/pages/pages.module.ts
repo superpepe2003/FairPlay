@@ -18,6 +18,7 @@ import { MovimientosComponent } from './movimientos/movimientos.component';
 import { BalancesComponent } from './balances/balances.component';
 import { AuthGuard } from '../guards/auth.guard';
 import { UsuarioComponent } from './usuario/usuario.component';
+import { CompraComponent } from './compra/compra.component';
 
 
 @NgModule({
@@ -30,7 +31,8 @@ import { UsuarioComponent } from './usuario/usuario.component';
     VentaComponent,
     MovimientosComponent,
     BalancesComponent,
-    UsuarioComponent
+    UsuarioComponent,
+    CompraComponent
   ],
   imports: [
     CommonModule,

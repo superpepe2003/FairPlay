@@ -13,6 +13,7 @@ import { BalancesComponent } from './balances/balances.component';
 import { AuthGuard } from '../guards/auth.guard';
 import { AdminGuard } from '../guards/admin.guard';
 import { UsuarioComponent } from './usuario/usuario.component';
+import { CompraComponent } from './compra/compra.component';
 
 const routes: Routes = [
 
@@ -26,6 +27,7 @@ const routes: Routes = [
             { path: 'clientes', component: ClienteComponent, data: { titulo: 'Clientes'} },
             { path: 'turnos', component: TurnoComponent, data: { titulo: 'Turnos'} },
             { path: 'ventas', component: VentaComponent, data: { titulo: 'Ventas'} },
+            { path: 'compras', component: CompraComponent, data: { titulo: 'Compras'} },
 
             // RUTAS ADMIN
 

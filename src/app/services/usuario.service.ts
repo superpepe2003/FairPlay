@@ -68,8 +68,10 @@ export class UsuarioService {
   }
 
   login( login: LoginInterface ) {
+    console.log( login );
     return this.http.post(`${ base_url }/login`, login )
               .pipe(
+                tap( console.log ),
                 tap( (resp: any) => {
                     localStorage.setItem('token', resp.token);
                     localStorage.setItem('menu', JSON.stringify( resp.menu ));
